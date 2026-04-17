@@ -1,23 +1,16 @@
 from pathlib import Path
 
 def next_magic_num(number: int) -> int:
-
     #hatvany
-    for i in range(len(number)):
-        if number[i] =="^":
-            base, exp = map(int, number.split("^"))
-            number = str(base ** exp)
-
-    numberAsArray = list(map(int, str(number)))
+    if "^" in number:
+        base, exp = map(int, number.split("^"))
+        number = str(base ** exp)
     number = int(number)
+    numberAsArray = list(map(int, str(number)))
 
-    #elso eset
-    for i in range(len(numberAsArray)):
-        if numberAsArray[i] != 9:
-            break
-        else:
-            return number + 2
-    
+    # #elso eset
+    if all(c == '9' for c in str(number)):
+        return number + 2
 
     #masodik eset
     lenght = len(numberAsArray)
@@ -34,16 +27,13 @@ def next_magic_num(number: int) -> int:
     
 
     #harmadik eset
-    if leftPart[-1] != 9:
-        leftPart[-1] += 1
-    else:
-        leftPart[-1] = 0
-        leftPart[-2] += 1
+    leftPartAdded = int("".join(map(str, leftPart)))
+    leftPartAdded += 1
 
     if lenght % 2 == 0:
-        FlippedNumberArray = leftPart + leftPart[::-1]
+        FlippedNumberArray = str(leftPartAdded) + str(leftPartAdded)[::-1]
     else:
-        FlippedNumberArray = leftPart + leftPart[:-1][::-1]
+        FlippedNumberArray = str(leftPartAdded) + str(leftPartAdded)[:-1][::-1]
 
     FlippedNumber = int("".join(map(str, FlippedNumberArray)))
     return FlippedNumber
