@@ -39,6 +39,7 @@ def main():
         
         with Path("output.txt").open("w", encoding="utf-8") as out_file:
             out_file.write("RENDSZAM\tDIJ\n")
+            print("RENDSZAM\tDIJ\n")
             for line in lines[2:]:
                 a = line.replace("\t", " ")
                 b = a.split()
@@ -47,7 +48,6 @@ def main():
                 eredmeny = parking_fee_calculator(b)
                 
                 szoveges_eredmeny = str(eredmeny)
-                print("RENDSZAM\tDIJ\n")
                 print(szoveges_eredmeny)
                 out_file.write(szoveges_eredmeny + "\n")
 
