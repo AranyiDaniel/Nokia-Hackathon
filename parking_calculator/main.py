@@ -39,7 +39,7 @@ def main():
         
         with Path("output.txt").open("w", encoding="utf-8") as out_file:
             out_file.write("RENDSZAM\tDIJ\n")
-            print("RENDSZAM\tDIJ\n")
+            print("RENDSZAM\tDIJ")
             for line in lines[2:]:
                 a = line.replace("\t", " ")
                 b = a.split()
