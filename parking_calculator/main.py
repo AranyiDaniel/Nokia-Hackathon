@@ -1,3 +1,4 @@
+import math
 from pathlib import Path
 from datetime import datetime
 
@@ -10,20 +11,22 @@ def parking_fee_calculator(input):
             "departureTime" : datetime.strptime(input[3] + input[4], "%Y-%m-%d%H:%M:%S")
         }
         durationOfStay = (car["departureTime"] - car["arrivalTime"]).total_seconds() / 60
-   
+        if durationOfStay < 0: return car["id"] + ": HIBA - Visszafelé parkolás!"
 
-        if durationOfStay <= 30:
-            return car["id"] + "\t\t" + str(0)
-        elif  30 < durationOfStay <= 180:
-            return car["id"] + "\t\t" + str(int(durationOfStay // 60 * 300))
-        elif 180 < durationOfStay < 1440:
-            return car["id"] + "\t\t" + str(int((3 * 300) + (durationOfStay // 60 - 3) * 500))
-        elif durationOfStay == 1440:
-            return car["id"] + "\t\t" + str(10000)
-        elif durationOfStay > 1440:
-            numberOfDaysSpent = durationOfStay // 1440
-            durationOfStayLeft = durationOfStay - numberOfDaysSpent * 1440
-            return car["id"] + "\t\t" + str(int(numberOfDaysSpent * 10000 + durationOfStayLeft  // 60 * 500))
+        days = int(durationOfStay // 1440)
+        minutesLeft = durationOfStay % 1440
+        fee = days * 10000
+
+        if minutesLeft > 30:
+            paidMinutes = minutesLeft - 30
+            startedHours = math.ceil(paidMinutes / 60)
+            
+            if startedHours <= 3:
+                fee += startedHours * 300
+            else:
+                fee += (3 * 300) + (startedHours - 3) * 500
+                
+        return f"{car['id']}\t\t{int(fee)}"
     
     except IndexError:
         return "HIBA: Hiányos adatsor (nincs elég oszlop)!"
