@@ -47,7 +47,7 @@ def main():
                 eredmeny = parking_fee_calculator(b)
                 
                 szoveges_eredmeny = str(eredmeny)
-                
+                print("RENDSZAM\tDIJ\n")
                 print(szoveges_eredmeny)
                 out_file.write(szoveges_eredmeny + "\n")
 
