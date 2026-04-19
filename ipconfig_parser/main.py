@@ -75,7 +75,6 @@ def main():
     all_results = []
     
     for file_path in sorted(Path(".").glob("*.txt")):
-        print(f"Feldolgozás: {file_path.name}")
         
         file_data = {
             "file_name": file_path.name,
@@ -87,7 +86,6 @@ def main():
     with output_path.open("w", encoding="utf-8") as json_file:
         json_string = json.dumps(all_results, indent=2, ensure_ascii=False)
         
-        print("\n--- A mentésre kerülő JSON tartalom: ---")
         print(json_string)
         
         json_file.write(json_string)
